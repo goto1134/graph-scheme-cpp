@@ -1,0 +1,31 @@
+@startuml
+
+class Module {
+    ModuleId id
+    string name
+}
+
+abstract class Input << T >> {
+    T get(Tag tag)
+    T remove(Tag tag)
+    bool has(Tag tag)
+    void put(Tag tag, T value)
+}
+
+abstract class DataInput
+
+class ControlInput << bool >>
+class ServiceInput << ModuleId >>
+
+Input <|-- DataInput
+Input <|-- ControlInput
+Input <|-- ServiceInput
+
+
+interface ProcedureFactory {
+    void start(Tag tag)
+}
+note top: Запускает процедуру
+
+
+@enduml

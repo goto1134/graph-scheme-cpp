@@ -1,0 +1,10 @@
+//
+// Created by Andrew on 28.11.2017.
+//
+
+#ifndef GRAPH_SCHEME_CPP_GRAPHSCHEMETYPES_H
+#define GRAPH_SCHEME_CPP_GRAPHSCHEMETYPES_H
+
+typedef int Tag;
+
+#endif //GRAPH_SCHEME_CPP_GRAPHSCHEMETYPES_H
