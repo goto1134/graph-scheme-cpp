@@ -49,8 +49,6 @@ public:
 };
 class ControlInput : public Input<bool> {
 };
-class ServiceInput : public Input<ModuleId> {
-};
 class IllegalStateException : std::exception {
 };
 

@@ -1,10 +1,5 @@
 @startuml
 
-class Module {
-    ModuleId id
-    string name
-}
-
 abstract class Input << T >> {
     T get(Tag tag)
     T remove(Tag tag)
@@ -15,17 +10,83 @@ abstract class Input << T >> {
 abstract class DataInput
 
 class ControlInput << bool >>
-class ServiceInput << ModuleId >>
+
+class DataBuffer {
+    const CounterFactory factory
+    const std::list<Input> inputs
+    std::map<Tag, Counter> counters
+    std::map<int,std::any> take(Tag tag)
+    bool isReady(Tag tag)
+    std::list<Tag> getReadyTags()
+    void put(int input, Tag tag, std::any value)
+}
+
+DataBuffer -.> CounterFactory
+DataBuffer --o Counter
+CounterFactory .-> DataReadyListener
+
+class CounterFactory {
+    const DataReadyListener listener
+    Counter create(int maxValue)
+}
+
+class Counter {
+    int maxValue
+    void increment() as inc
+}
+note right of Counter::increment
+ Асинхронно уведомляет
+ DataReadyListener
+ о достижении
+ максимального значения
+end note
 
 Input <|-- DataInput
 Input <|-- ControlInput
-Input <|-- ServiceInput
 
+DataBuffer o- Input
+
+DataReadyListener ---> ProcedureFactory
+DataReadyListener ---> DataBuffer
+
+class DataReadyListener {
+    DataBuffer buffer
+    ProcedureFactory factory
+    void dataIsReady(Tag tag)
+}
+note right of DataReadyListener::dataIsReady
+    Берёт данные из
+    DataBuffer и запускает
+    ProcedureFactory.start
+end note
 
 interface ProcedureFactory {
-    void start(Tag tag)
+    void start(Tag tag, std::map<int,std::any> data)
 }
 note top: Запускает процедуру
 
+class ModuleMap << T >>{
+    std::map<ModuleId, T> map
+    T get(ModuleId id)
+}
+
+class InputAddress {
+    ModuleId module
+    int input
+}
+
+class Result {
+    InputAddress address
+    std::any result
+}
+
+class ResultBuffer {
+    std::queue<Result> buffer
+    void put(Result result)
+    std::list<Result> takeAll()
+    bool empty()
+}
 
 @enduml
+
+todo: решить, в какой момент запоминать значения служебных входов
