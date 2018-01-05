@@ -13,6 +13,11 @@
 class IllegalStateException : std::exception {
 };
 
+struct InputAddress {
+    ModuleId moduleId;
+    int input;
+};
+
 class Input {
 private:
     std::map<Tag, std::experimental::any> buffer;
