@@ -6,50 +6,49 @@
 #define GRAPH_SCHEME_CPP_INPUT_H
 
 #include <map>
+#include <experimental/any>
 #include "Tag.h"
 #include "Module.h"
 
-template<typename T>
+class IllegalStateException : std::exception {
+};
+
 class Input {
 private:
-    std::map<Tag, T> buffer;
+    std::map<Tag, std::experimental::any> buffer;
 public:
     /**
      * Adds data with specific tag
      * @param tag tag of data
      * @param value data
      */
-    void put(Tag tag, T value) throw(IllegalStateException) {
+    void put(Tag tag, std::experimental::any value) throw(IllegalStateException) {
         if (has(tag)) {
             throw IllegalStateException();
         }
-        buffer.insert(std::pair<int, T>(tag, value));
+        buffer.insert(std::make_pair(tag, value));
     }
 
     /**
      * @param tag
      * @return data from input with specified tag
      */
-    T get(Tag tag) throw(IllegalStateException) {
+    std::experimental::any get(Tag tag) const throw(IllegalStateException) {
         if (!has(tag)) {
             throw IllegalStateException();
         }
         return buffer.find(tag);
     }
 
-    T remove(Tag tag) throw(IllegalStateException) {
-        T value = get(tag);
+    std::experimental::any remove(Tag tag) throw(IllegalStateException) {
+        std::experimental::any value = get(tag);
         buffer.erase(tag);
         return value;
     }
 
-    bool has(Tag tag) {
+    bool has(Tag tag) const {
         return buffer.count(tag) > 0;
     }
-};
-class ControlInput : public Input<bool> {
-};
-class IllegalStateException : std::exception {
 };
 
 #endif //GRAPH_SCHEME_CPP_INPUT_H

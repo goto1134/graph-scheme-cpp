@@ -9,7 +9,7 @@ abstract class Input << T >> {
 
 abstract class DataInput
 
-class ControlInput << bool >>
+' class ControlInput << bool >>
 
 class DataBuffer {
     const CounterFactory factory
@@ -42,7 +42,7 @@ note right of Counter::increment
 end note
 
 Input <|-- DataInput
-Input <|-- ControlInput
+'Input <|-- ControlInput
 
 DataBuffer o- Input
 
