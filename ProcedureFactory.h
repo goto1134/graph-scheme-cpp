@@ -9,7 +9,7 @@
 #include <map>
 #include "Tag.h"
 
-virtual class ProcedureFactory {
+class ProcedureFactory {
 public:
     void start(Tag tag, const std::map<int, std::experimental::any> &data) {};
 };
