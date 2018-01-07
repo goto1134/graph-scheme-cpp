@@ -16,8 +16,8 @@ private:
     const Data data;
 public:
     Result(const Tag tag, const InputAddress &inputAddress, Data data) : tag(tag),
-                                                                                           inputAddress(inputAddress),
-                                                                                           data(std::move(data)) {}
+                                                                         inputAddress(inputAddress),
+                                                                         data(std::move(data)) {}
 
     const InputAddress &getInputAddress() const {
         return inputAddress;

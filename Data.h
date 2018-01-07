@@ -5,5 +5,5 @@
 #ifndef GRAPH_SCHEME_CPP_MPI_DATA_H
 #define GRAPH_SCHEME_CPP_MPI_DATA_H
 
-typedef byte *Data;
+typedef char *Data;
 #endif //GRAPH_SCHEME_CPP_MPI_DATA_H

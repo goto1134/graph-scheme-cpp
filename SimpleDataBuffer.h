@@ -7,6 +7,7 @@
 
 
 #include <vector>
+#include <fruit/fruit.h>
 #include "Data.h"
 #include "DataBuffer.h"
 #include "DataReadyListener.h"
@@ -16,7 +17,7 @@ class SimpleDataBuffer : public DataBuffer {
     std::map<ModuleId, std::vector<Input>> moduleInputs;
     DataReadyListener *dataReadyListener;
 public:
-    SimpleDataBuffer(DataReadyListener *procedureFactory, std::vector<ModuleData> modules) : dataReadyListener(
+    INJECT(SimpleDataBuffer(DataReadyListener *procedureFactory, std::vector<ModuleData> modules)): dataReadyListener(
             procedureFactory) {
 
         for (ModuleData moduleData: modules) {
@@ -29,7 +30,7 @@ public:
     }
 
     std::map<int, Data> take(ModuleId moduleId, Tag tag) override {
-        std::map<int, std::experimental::fundamentals_v1::any> data;
+        std::map<int, Data> data;
         std::vector<Input> inputs = moduleInputs[moduleId];
         for (unsigned long i = 0; i < inputs.size(); i++) {
             const auto any = inputs.at(i).get(tag);
@@ -40,7 +41,7 @@ public:
     }
 
     bool isReady(ModuleId moduleId, Tag tag) const override {
-        std::vector<Input> inputs = moduleInputs[moduleId];
+        std::vector<Input> inputs = moduleInputs.at(moduleId);
         for (const auto &input:inputs) {
             if (!input.has(tag)) return false;
         }

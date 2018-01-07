@@ -43,7 +43,7 @@ public:
         if (!has(tag)) {
             throw IllegalStateException();
         }
-        return buffer.find(tag);
+        return buffer.at(tag);
     }
 
     Data remove(Tag tag) throw(IllegalStateException) {
