@@ -9,6 +9,7 @@
 #include <experimental/any>
 #include "Tag.h"
 #include "Module.h"
+#include "Data.h"
 
 class IllegalStateException : std::exception {
 };
@@ -20,14 +21,14 @@ struct InputAddress {
 
 class Input {
 private:
-    std::map<Tag, std::experimental::any> buffer;
+    std::map<Tag, Data> buffer;
 public:
     /**
      * Adds data with specific tag
      * @param tag tag of data
      * @param value data
      */
-    void put(Tag tag, std::experimental::any value) throw(IllegalStateException) {
+    void put(Tag tag, Data value) throw(IllegalStateException) {
         if (has(tag)) {
             throw IllegalStateException();
         }
@@ -38,15 +39,15 @@ public:
      * @param tag
      * @return data from input with specified tag
      */
-    std::experimental::any get(Tag tag) const throw(IllegalStateException) {
+    Data get(Tag tag) const throw(IllegalStateException) {
         if (!has(tag)) {
             throw IllegalStateException();
         }
         return buffer.find(tag);
     }
 
-    std::experimental::any remove(Tag tag) throw(IllegalStateException) {
-        std::experimental::any value = get(tag);
+    Data remove(Tag tag) throw(IllegalStateException) {
+        Data value = get(tag);
         buffer.erase(tag);
         return value;
     }

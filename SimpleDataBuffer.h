@@ -7,6 +7,7 @@
 
 
 #include <vector>
+#include "Data.h"
 #include "DataBuffer.h"
 #include "DataReadyListener.h"
 
@@ -27,7 +28,7 @@ public:
         }
     }
 
-    std::map<int, std::experimental::fundamentals_v1::any> take(ModuleId moduleId, Tag tag) override {
+    std::map<int, Data> take(ModuleId moduleId, Tag tag) override {
         std::map<int, std::experimental::fundamentals_v1::any> data;
         std::vector<Input> inputs = moduleInputs[moduleId];
         for (unsigned long i = 0; i < inputs.size(); i++) {
@@ -47,7 +48,7 @@ public:
     }
 
     void
-    put(ModuleId moduleId, int inputIndex, Tag tag, const std::experimental::fundamentals_v1::any &value) override {
+    put(ModuleId moduleId, int inputIndex, Tag tag, const Data &value) override {
         std::vector<Input> inputs = moduleInputs[moduleId];
         inputs[inputIndex].put(tag, value);
         if (isReady(moduleId, tag)) {

@@ -6,16 +6,16 @@
 #define GRAPH_SCHEME_CPP_MPI_RESULT_H
 
 #include <utility>
-
 #include "Input.h"
+#include "Data.h"
 
 class Result {
 private:
     const Tag tag;
     const InputAddress inputAddress;
-    const std::experimental::any data;
+    const Data data;
 public:
-    Result(const Tag tag, const InputAddress &inputAddress, std::experimental::any data) : tag(tag),
+    Result(const Tag tag, const InputAddress &inputAddress, Data data) : tag(tag),
                                                                                            inputAddress(inputAddress),
                                                                                            data(std::move(data)) {}
 
@@ -23,7 +23,7 @@ public:
         return inputAddress;
     }
 
-    const std::experimental::any &getData() const {
+    const Data &getData() const {
         return data;
     }
 };

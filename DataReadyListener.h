@@ -8,10 +8,11 @@
 #include <experimental/any>
 #include <map>
 #include "Tag.h"
+#include "Data.h"
 
 class DataReadyListener {
 public:
-    virtual void start(ModuleId moduleId, Tag tag, const std::map<int, std::experimental::any> &data);
+    virtual void start(ModuleId moduleId, Tag tag, const std::map<int, Data> &data);
 };
 
 #endif //GRAPH_SCHEME_CPP_MPI_PROCEDUREFACTORY_H
