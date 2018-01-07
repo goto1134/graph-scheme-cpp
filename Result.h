@@ -11,11 +11,13 @@
 
 class Result {
 private:
+    const Tag tag;
     const InputAddress inputAddress;
     const std::experimental::any data;
 public:
-    Result(const InputAddress &inputAddress, std::experimental::any data) : inputAddress(inputAddress),
-                                                                            data(std::move(data)) {}
+    Result(const Tag tag, const InputAddress &inputAddress, std::experimental::any data) : tag(tag),
+                                                                                           inputAddress(inputAddress),
+                                                                                           data(std::move(data)) {}
 
     const InputAddress &getInputAddress() const {
         return inputAddress;

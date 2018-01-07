@@ -7,4 +7,9 @@
 
 typedef int ModuleId;
 
+struct ModuleData {
+    ModuleId id;
+    int inputCount;
+};
+
 #endif //GRAPH_SCHEME_CPP_MODULE_H

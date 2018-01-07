@@ -9,9 +9,9 @@
 #include <map>
 #include "Tag.h"
 
-class ProcedureFactory {
+class DataReadyListener {
 public:
-    void start(Tag tag, const std::map<int, std::experimental::any> &data) {};
+    virtual void start(ModuleId moduleId, Tag tag, const std::map<int, std::experimental::any> &data);
 };
 
 #endif //GRAPH_SCHEME_CPP_MPI_PROCEDUREFACTORY_H
