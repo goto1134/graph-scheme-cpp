@@ -5,25 +5,15 @@
 #ifndef GRAPH_SCHEME_CPP_MPI_RESULTBUFFER_H
 #define GRAPH_SCHEME_CPP_MPI_RESULTBUFFER_H
 
-#include <queue>
 #include "Result.h"
 
 class ResultBuffer {
-    std::queue<Result *> buffer;
 public:
-    void put(Result *result) {
-        buffer.push(result);
-    }
+    virtual void put(Result *result) = 0;
 
-    Result *take() {
-        const auto pResult = buffer.front();
-        buffer.pop();
-        return pResult;
-    }
+    virtual Result *take() = 0;
 
-    bool empty() {
-        return buffer.empty();
-    }
+    virtual bool empty() = 0;
 };
 
 #endif //GRAPH_SCHEME_CPP_MPI_RESULTBUFFER_H

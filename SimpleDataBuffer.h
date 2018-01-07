@@ -17,10 +17,10 @@ class SimpleDataBuffer : public DataBuffer {
     std::map<ModuleId, std::vector<Input>> moduleInputs;
     DataReadyListener *dataReadyListener;
 public:
-    INJECT(SimpleDataBuffer(DataReadyListener *procedureFactory, std::vector<ModuleData> modules)): dataReadyListener(
-            procedureFactory) {
+    INJECT(SimpleDataBuffer(DataReadyListener * dataReadyListener, std::vector<ModuleData> * modules))
+            : dataReadyListener(dataReadyListener) {
 
-        for (ModuleData moduleData: modules) {
+        for (ModuleData moduleData: *modules) {
             std::vector<Input> inputs;
             for (int i = 0; i < moduleData.inputCount; ++i) {
                 inputs.emplace_back();

@@ -12,7 +12,7 @@
 
 class DataReadyListener {
 public:
-    virtual void start(ModuleId moduleId, Tag tag, const std::map<int, Data> &data);
+    virtual void start(ModuleId moduleId, Tag tag, const std::map<int, Data> &data) = 0;
 };
 
 #endif //GRAPH_SCHEME_CPP_MPI_PROCEDUREFACTORY_H
