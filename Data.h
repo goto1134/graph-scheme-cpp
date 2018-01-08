@@ -5,5 +5,8 @@
 #ifndef GRAPH_SCHEME_CPP_MPI_DATA_H
 #define GRAPH_SCHEME_CPP_MPI_DATA_H
 
-typedef char *Data;
+typedef struct {
+    char *array;
+    int length;
+} Data;
 #endif //GRAPH_SCHEME_CPP_MPI_DATA_H
