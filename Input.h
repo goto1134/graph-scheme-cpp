@@ -6,7 +6,6 @@
 #define GRAPH_SCHEME_CPP_INPUT_H
 
 #include <map>
-#include <experimental/any>
 #include "Tag.h"
 #include "Module.h"
 #include "Data.h"
@@ -17,6 +16,8 @@ class IllegalStateException : std::exception {
 struct InputAddress {
     ModuleId moduleId;
     int input;
+
+    InputAddress(ModuleId moduleId, int input) : moduleId(moduleId), input(input) {};
 };
 
 class Input {

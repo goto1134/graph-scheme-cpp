@@ -9,23 +9,14 @@
 #include "Input.h"
 #include "Data.h"
 
-class Result {
-private:
+struct Result {
     const Tag tag;
     const InputAddress inputAddress;
     const Data data;
-public:
+
     Result(const Tag tag, const InputAddress &inputAddress, Data data) : tag(tag),
                                                                          inputAddress(inputAddress),
                                                                          data(std::move(data)) {}
-
-    const InputAddress &getInputAddress() const {
-        return inputAddress;
-    }
-
-    const Data &getData() const {
-        return data;
-    }
 };
 
 #endif //GRAPH_SCHEME_CPP_MPI_RESULT_H
