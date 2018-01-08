@@ -14,26 +14,26 @@
 
 class SimpleDataBuffer : public DataBuffer {
 
-    std::map<ModuleId, std::vector<Input>> moduleInputs;
+    std::map<ModuleId, std::vector<Input> *> moduleInputs;
     DataReadyListener *dataReadyListener;
 public:
     INJECT(SimpleDataBuffer(DataReadyListener * dataReadyListener, std::vector<ModuleData> * modules))
             : dataReadyListener(dataReadyListener) {
 
-        for (ModuleData moduleData: *modules) {
-            std::vector<Input> inputs;
+        for (ModuleData &moduleData: *modules) {
+            auto inputs = new std::vector<Input>();
             for (int i = 0; i < moduleData.inputCount; ++i) {
-                inputs.emplace_back();
+                inputs->emplace_back();
             }
-            moduleInputs.insert(make_pair(moduleData.id, inputs));
+            moduleInputs.insert(std::make_pair(moduleData.id, inputs));
         }
     }
 
     std::map<int, Data> take(ModuleId moduleId, Tag tag) override {
         std::map<int, Data> data;
-        std::vector<Input> inputs = moduleInputs[moduleId];
-        for (unsigned long i = 0; i < inputs.size(); i++) {
-            const auto any = inputs.at(i).get(tag);
+        std::vector<Input> *inputs = moduleInputs.at(moduleId);
+        for (unsigned long i = 0; i < inputs->size(); i++) {
+            const auto any = inputs->at(i).get(tag);
             data.insert(std::make_pair(i, any));
         }
 
@@ -41,8 +41,8 @@ public:
     }
 
     bool isReady(ModuleId moduleId, Tag tag) const override {
-        std::vector<Input> inputs = moduleInputs.at(moduleId);
-        for (const auto &input:inputs) {
+        std::vector<Input> *inputs = moduleInputs.at(moduleId);
+        for (const auto &input:*inputs) {
             if (!input.has(tag)) return false;
         }
         return true;
@@ -50,8 +50,9 @@ public:
 
     void
     put(ModuleId moduleId, int inputIndex, Tag tag, const Data &value) override {
-        std::vector<Input> inputs = moduleInputs[moduleId];
-        inputs[inputIndex].put(tag, value);
+        std::vector<Input> *inputs = moduleInputs.at(moduleId);
+        std::cout << inputs->size() << std::endl;
+        inputs->at(static_cast<unsigned long>(inputIndex)).put(tag, value);
         if (isReady(moduleId, tag)) {
             auto data = take(moduleId, tag);
             dataReadyListener->start(moduleId, tag, data);
