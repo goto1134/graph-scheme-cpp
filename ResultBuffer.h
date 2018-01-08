@@ -14,6 +14,12 @@ public:
     virtual Result *take() = 0;
 
     virtual bool empty() = 0;
+
+    virtual int size() = 0;
+
+    virtual void finish(Tag tag) = 0;
+
+    virtual int finishedTagsCount() = 0;
 };
 
 #endif //GRAPH_SCHEME_CPP_MPI_RESULTBUFFER_H

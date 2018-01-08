@@ -33,7 +33,7 @@ public:
         std::map<int, Data> data;
         std::vector<Input> *inputs = moduleInputs.at(moduleId);
         for (unsigned long i = 0; i < inputs->size(); i++) {
-            const auto any = inputs->at(i).get(tag);
+            const auto any = inputs->at(i).remove(tag);
             data.insert(std::make_pair(i, any));
         }
 
@@ -51,7 +51,6 @@ public:
     void
     put(ModuleId moduleId, int inputIndex, Tag tag, const Data &value) override {
         std::vector<Input> *inputs = moduleInputs.at(moduleId);
-        std::cout << inputs->size() << std::endl;
         inputs->at(static_cast<unsigned long>(inputIndex)).put(tag, value);
         if (isReady(moduleId, tag)) {
             auto data = take(moduleId, tag);
